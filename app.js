@@ -1,17 +1,40 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const express = require("express");
+const cTable = require("console.table");
+const { query } = require("express");
 
-var app = express();
-const PORT = process.env.PORT || 3000;
+class Database {
+    constructor(config) {
+        this.connection = mysql.createConnection(config)
+    }
 
-app.use(express.urlencoded({extended: true}));
-app.use(express.json());
+    query(sql, args) {
+        return new Promise((resolve, reject) => {
+            this.connection.query(sql, args, (err, rows) => {
+                if (err)
+                return reject(err)
+                resolve(rows)
+            })
+        })
+    }
 
-app.get("*", (req, res) => {
-    res.send("Successful get to wildcard")
+    close() {
+        return new Promise((resolve, reject) => {
+            this.connection.end(err => {
+                if (err)
+                return reject(err)
+                resolve()
+            });
+        });
+    }
+}
+
+const db = new Database({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "Greenz123!",
+    database: "employee_tracker"
 });
 
-app.listen(PORT, () => {
-    console.log("Server listening on: http://localhost:" + PORT)
-});
+
