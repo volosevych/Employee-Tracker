@@ -47,31 +47,42 @@ async function employeeSummary() {
     });
 }
 
-function runApp() {
+async function addEmployee() {
+    let positions = await db.query('SELECT id, title FROM role');
+    let managers = await db.query('SELECT id, CONCAT(first_name, " ", last_name) AS Manager FROM employee');
+    managers.unshift({id: null, Manager: "None"});
+
     inquirer
-    .prompt({
-        name: "mainmenu",
-        type: "list",
-        message: "What would you like to do?",
-        choices: [
-            "View all employeers",
-            "Add a new employee",
-            "Add a new role",
-            "Add a new Department"
-        ]
-    }).then( (res) => {
-        switch (res.mainmenu) {
-            case "View all employeers":
-                employeeSummary();
-                break;
-            case "Add a new employee":
-                break;
-            case "Add a new role":
-                break;
-            case "Add a new Department":
-                break;
+        .prompt([{
+            name: "firstName",
+            type: "input",
+            message: "Enter employee's first name:"
+        },
+        {
+            name: "lastName",
+            type: "input",
+            message: "Enter employee's last name:"
+        },
+        {
+            name: "role",
+            type: "list",
+            message: "Choose employee role:",
+            choices: positions.map(obj => obj.title)
+        },
+        {
+            name: "manager",
+            type: "list",
+            message: "Choose the employee's manager:",
+            choices: managers.map(obj => obj.Manager)
         }
-    });
+        ]).then((answers) => {
+            let positionDetails = positions.find(obj => obj.title === answers.role);
+            let manager = managers.find(obj => obj.Manager === answers.manager);
+            db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?)",
+            [[answers.firstName, answers.lastName, positionDetails.id, manager.id]]);
+            console.log(`${answers.firstName} was added to the employee database!`);
+            runApp();
+        });
 }
 
 runApp();
