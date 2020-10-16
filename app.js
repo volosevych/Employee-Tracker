@@ -1,7 +1,9 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
-const { query } = require("express");
+const {
+    query
+} = require("express");
 
 class Database {
     constructor(config) {
@@ -12,7 +14,7 @@ class Database {
         return new Promise((resolve, reject) => {
             this.connection.query(sql, args, (err, rows) => {
                 if (err)
-                return reject(err)
+                    return reject(err)
                 resolve(rows)
             })
         })
@@ -22,7 +24,7 @@ class Database {
         return new Promise((resolve, reject) => {
             this.connection.end(err => {
                 if (err)
-                return reject(err)
+                    return reject(err)
                 resolve()
             });
         });
@@ -37,4 +39,11 @@ const db = new Database({
     database: "employee_tracker"
 });
 
+async function testFunc() {
+    await db.query('SELECT e.id, e.first_name AS First_Name, e.last_name AS Last_Name, title AS Title, salary AS Salary, name AS Department, CONCAT(m.first_name, " ", m.last_name) AS Manager FROM employee e LEFT JOIN employee m ON e.manager_id = m.id INNER JOIN role r ON e.role_id = r.id INNER JOIN department d ON r.department_id = d.id', (err, res) => {
+        if (err) throw err;
+        console.log(res);
+    });
+}
 
+testFunc();
