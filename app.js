@@ -85,18 +85,31 @@ async function addEmployee() {
         });
 }
 
-async function removeEmployee() {};
+async function removeEmployee() {
+    let employees = await db.query('SELECT id, CONCAT(first_name, "", last_name) AS name FROM employee');
+    employees.push({id: null, name: "Cancel"});
+
+    inquirer
+    .prompt([
+        {
+            name: "employeeName",
+            type: "list",
+            message: "Remove which employee?",
+            choices: exmployees.map(obj => obj.name)
+        }
+    ]).then((responce) => {
+        if(responce.employeeName != "Cancel") {
+            let unluckyEmployee = employees.find(obj => obj.name === responce.employeeName);
+            db.query("DELETE FROM employee WHERE id=?", unluckyEmployee.id);
+            console.log(`${responce.employeeName} was let go...`);
+        }
+        runApp();
+    })
+};
+
+async function addRole() {};
+
+async function addDepartment() {};
 
 async function updateManager() {};
 
-function runApp() {
-    inquirer
-    addEmployee();
-    break;
-    case "Epdate Employee info":
-        break;
-    case "Remove an employee":
-        break;
-}
-
-runApp();
