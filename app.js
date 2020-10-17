@@ -39,14 +39,63 @@ const db = new Database({
     database: "employee_tracker"
 });
 
-async function employeeSummary() {
-    await db.query('SELECT e.id, e.first_name AS First_Name, e.last_name AS Last_Name, title AS Title, salary AS Salary, name AS Department, CONCAT(m.first_name, " ", m.last_name) AS Manager FROM employee e LEFT JOIN employee m ON e.manager_id = m.id INNER JOIN role r ON e.role_id = r.id INNER JOIN department d ON r.department_id = d.id', (err, res) => {
+// showing employee summary
+async function showEmployeeSummary() {
+    await db.query('SELECT e.id, e.firts_name AS Firts_Name, e.last_name AS Last_name, title AS Title, salary AS Salary, name AS Department, CONCAT(m.fisrt_name, "", last_name) AS Manager FROm employee e LEFT JOIN employee m ON e.manager_id = m.id INNER JIN role r ON e.role_id = r.id INNER JOIN department d ON r.department_id = d.id', (err, res) => {
         if (err) throw err;
         console.log(res);
-        runApp();
-    });
+
+        managers.unshift({ id: null, Manager: "None "});
+
+        inquirer
+        .prompt([
+            {
+                name: "firstname",
+                type: "input",
+                message: "Enter employee's first name:"
+            },
+            {
+                name: "lastName",
+                type: "input",
+                message: "Enter employee's last name:"
+            },
+            {
+                name: "role",
+                type: "list",
+                message: "Choose employee role:",
+                choices: positions.map(obj => obj.title)
+            },
+            {
+                name: "manager",
+                type: "list",
+                message: "Choose employee's manager:",
+                choices: positions.map(obj => obj.Manager)
+            }
+        ]).then((answer) => {
+            let positionDetails = positions.find(obj => obj.title === answers.role);
+            let manager = managers.find(obj => obj.Manager === answers.manager);
+            db.query("INSERT INTO employee (fisrt_name, last_name, role-id, manager_id) VALUES (?)", [[answers.firstName, answers.lastName, positionDetails.id, manager.id]]);
+            console.log(`${answers.firstName} was added to the employee database!`);
+            runApp();
+        })
+    })
 }
 
+async function removeEmployee() {
+    let employees = await db.query('SELECT id, CONCAT(firts_name, " ", last_name) AS name FROM employee');
+    employees.push({ id: null, name: "Cancel" });
+
+    inquirer
+    .prompt([
+        {
+            name: "tarhetEmployee",
+            type: "list",
+            message: ""
+        }
+    ])
+}
+
+// adding new employee
 async function addEmployee() {
     let positions = await db.query('SELECT id, title FROM role');
     let managers = await db.query('SELECT id, CONCAT(first_name, " ", last_name) AS Manager FROM employee');
@@ -85,6 +134,7 @@ async function addEmployee() {
         });
 }
 
+// remove new employee
 async function removeEmployee() {
     let employees = await db.query('SELECT id, CONCAT(first_name, "", last_name) AS name FROM employee');
     employees.push({id: null, name: "Cancel"});
@@ -112,6 +162,8 @@ async function addRole() {};
 async function addDepartment() {};
 
 async function updateManager() {};
+
+
 
 function runApp() {
     inquirer.prompt({
