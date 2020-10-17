@@ -85,4 +85,18 @@ async function addEmployee() {
         });
 }
 
+async function removeEmployee() {};
+
+async function updateManager() {};
+
+function runApp() {
+    inquirer
+    addEmployee();
+    break;
+    case "Epdate Employee info":
+        break;
+    case "Remove an employee":
+        break;
+}
+
 runApp();
