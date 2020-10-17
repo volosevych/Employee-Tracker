@@ -113,3 +113,41 @@ async function addDepartment() {};
 
 async function updateManager() {};
 
+function runApp() {
+    inquirer.prompt({
+        name: "mainmenu",
+        type: "list",
+        message: "What would you like to do?",
+        choices: [
+            "View all employees",
+            "Edit employee info",
+            "View roles",
+            "Edit roles",
+            "View Departments",
+            "Edit Departments"
+        ]
+    }).then(responces => {
+        switch (responces.mainmenu) {
+            case "View all employees":
+                showEmployeeSummary();
+                break;
+            case "Edit employee info":
+                editEmployeeOptions();
+                break;
+            case "View roles":
+                showRoleSummary();
+                break;
+            case "Edit Roles":
+                editRoleOptions();
+                break;
+            case "View Departments":
+                showDepartments();
+                break;
+            case "Edit Departments":
+                editDepartmentOptions();
+                break;
+        }
+    })
+}
+
+runApp();
