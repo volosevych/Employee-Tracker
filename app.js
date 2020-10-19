@@ -223,7 +223,7 @@ async function updateEmployeeRole() {
     })
 };
 
-async function addTole() {
+async function addRole() {
     let departmens= await db.query('SELECT id, name FROM department');
 
     inquirer.prompt([
