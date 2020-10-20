@@ -137,7 +137,7 @@ async function removeEmployee() {
             name: "employeeName",
             type: "list",
             message: "Remove which employee?",
-            choices: exmployees.map(obj => obj.name)
+            choices: employees.map(obj => obj.name)
         }]).then((responce) => {
             if (responce.employeeName != "Cancel") {
                 let unluckyEmployee = employees.find(obj => obj.name === responce.employeeName);
