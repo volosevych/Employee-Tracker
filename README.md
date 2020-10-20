@@ -1,9 +1,5 @@
-<br />
 <p align="center">
-  <h3 align="center" style="font-size: 50">Unit 12: Employee Tracker</h3>
-
-
-
+  <h3 align="center">Unit 12: Employee Tracker</h3>
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -17,7 +13,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<!-- video -->
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/66918031/96641759-703eba00-12e2-11eb-91ce-71ae699dd96b.gif)
 
 Content Management System to manage a company's employees. The application allows users to view and manage employee records.
 

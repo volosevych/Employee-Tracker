@@ -150,24 +150,23 @@ async function removeEmployee() {
 
 async function updateManager() {
     let employees = await db.query('SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee');
-    employees.push({
-        id: null,
-        name: "Cancel"
-    });
+    employees.push({ id: null, name: "Cancel" });
 
-    inquirer.prompt([{
-        name: "empName",
-        type: "list",
-        message: "For which employee?",
-        cahoices: employees.map(pbg => obj.name)
-    }]).then(employeeInfo => {
+    inquirer.prompt([
+        {
+            name: "empName",
+            type: "list",
+            message: "For which employee?",
+            choices: employees.map(obj => obj.name)
+        }
+    ]).then(employeeInfo => {
         if (employeeInfo.empName == "Cancel") {
             runApp();
             return;
         }
         let managers = employees.filter(currEmployee => currEmployee.name != employeeInfo.empName);
         for (i in managers) {
-            if (namagers[i].name === "Cancel") {
+            if (managers[i].name === "Cancel") {
                 managers[i].name = "None";
             }
         };
@@ -179,13 +178,11 @@ async function updateManager() {
                 message: "Change their manager to:",
                 choices: managers.map(obj => obj.name)
             }
-        ]).then(managerinfo => {
+        ]).then(managerInfo => {
             let empID = employees.find(obj => obj.name === employeeInfo.empName).id
-            let mnID = managers.find(obj => obj.name === managerinfo.mgName).id
-
-            db.query("UPDATE employee SET manager_id=? Where id=?", [mgID, empID]);
-
-            console.log("\x1b[23m", `${employeeInfo.empName} now reposrts to ${managerInfo.mgName}`);
+            let mgID = managers.find(obj => obj.name === managerInfo.mgName).id
+            db.query("UPDATE employee SET manager_id=? WHERE id=?", [mgID, empID]);
+            console.log("\x1b[32m", `${employeeInfo.empName} now reports to ${managerInfo.mgName}`);
             runApp();
         })
     })
