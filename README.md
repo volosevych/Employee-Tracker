@@ -13,7 +13,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/66918031/96641759-703eba00-12e2-11eb-91ce-71ae699dd96b.gif)
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/66918031/96643015-31a9ff00-12e4-11eb-9a71-04048af37e5b.gif)
 
 Content Management System to manage a company's employees. The application allows users to view and manage employee records.
 
