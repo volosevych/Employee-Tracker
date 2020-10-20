@@ -73,8 +73,8 @@ async function showDepartments() {
 };
 
 // set max char. input
-async function confirmStringinput(input) {
-    if ((input.trim() != "") && (iput.trim().length <= 30)) {
+async function confirmStringInput(input) {
+    if ((input.trim() != "") && (input.trim().length <= 30)) {
         return true;
     }
     return "Invalid input. Please limit your input to 30 characters or less"
@@ -231,7 +231,7 @@ async function addRole() {
             name: "roleName",
             type: "input",
             message: "Enter new role title:",
-            validate: confirmStringinput
+            validate: confirmStringInput
         },
         {
             name: "salarynum",
@@ -385,7 +385,6 @@ function editRoleOptions() {
         choices: [
             "Add A New Role",
             "Update A Role",
-            "Remove A Role",
             "Return To Main Menu"
         ]
     }).then(responses => {
@@ -395,9 +394,6 @@ function editRoleOptions() {
                 break;
             case "Update A Role":
                 updateRole();
-                break;
-            case "Remove A Role":
-                removeRole();
                 break;
             case "Return To Main Menu":
                 runApp();
