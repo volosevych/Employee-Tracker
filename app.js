@@ -224,7 +224,7 @@ async function updateEmployeeRole() {
 };
 
 async function addRole() {
-    let departmens= await db.query('SELECT id, name FROM department');
+    let departments = await db.query('SELECT id, name FROM department');
 
     inquirer.prompt([
         {
@@ -234,14 +234,14 @@ async function addRole() {
             validate: confirmStringInput
         },
         {
-            name: "salarynum",
+            name: "salaryNum",
             type: "input",
             message: "Enter role's salary:",
             validate: input => {
-                if(!isNaN(input)) {
+                if (!isNaN(input)) {
                     return true;
                 }
-                return "please enter a volid number"
+                return "Please enter a valid number."
             }
         },
         {
@@ -252,10 +252,9 @@ async function addRole() {
         }
     ]).then(answers => {
         let depID = departments.find(obj => obj.name === answers.roleDepartment).id
-        db.query("INSERT INTO role (title, salary, department_id) VALUES (?)", [[answers.roleName, answers.salarynum, depID]])
-
+        db.query("INSERT INTO role (title, salary, department_id) VALUES (?)", [[answers.roleName, answers.salaryNum, depID]]);
         console.log("\x1b[32m", `${answers.roleName} was added. Department: ${answers.roleDepartment}`);
-        runApp;
+        runApp();
     })
 };
 
