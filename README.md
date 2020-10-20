@@ -1,7 +1,6 @@
-<!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <h3 align="center">Unit 12: Employee Tracker</h3>
+  <h3 align="center" style="font-size: 50">Unit 12: Employee Tracker</h3>
 
 
 
