@@ -45,6 +45,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Anastasia Volosevych - [@gmail](gmail.com) - volosevichh@gmail.com
+Anastasia Volosevych - [gmail](https://mail.google.com/mail/u/0/#inbox) - volosevichh@gmail.com
 
 Project Link: [https://github.com/volosevych/Employee-Tracker](https://github.com/volosevych/Employee-Tracker)
